@@ -1,0 +1,206 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>First Page | Hexo</title><meta name="description" content="CSS相关概念  CSS的定义  HTML   超文本标记语言    Cascading Style Sheets 层叠 样式表（级联样式表）      2.CSS的作用 ​                定义网页外观，如字体、背景、颜色, 布局 等 \2. CSS特点     好~              ① 精确的定位 准确的控制页面的任何元素(标记) ​                ②"><meta name="author" content="John Doe"><meta name="copyright" content="John Doe"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://yoursite.com/2020/08/05/First-Page/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="First Page"><meta property="og:url" content="http://yoursite.com/2020/08/05/First-Page/"><meta property="og:site_name" content="Hexo"><meta property="og:description" content="CSS相关概念  CSS的定义  HTML   超文本标记语言    Cascading Style Sheets 层叠 样式表（级联样式表）      2.CSS的作用 ​                定义网页外观，如字体、背景、颜色, 布局 等 \2. CSS特点     好~              ① 精确的定位 准确的控制页面的任何元素(标记) ​                ②"><meta property="og:image" content="http://yoursite.com/img/avatar.png"><meta property="article:published_time" content="2020-08-05T12:44:29.000Z"><meta property="article:modified_time" content="2020-08-05T12:49:30.858Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  bookmark: {
+    message_prev: 'Press',
+    message_next: 'to bookmark this page'
+  },
+  runtime_unit: 'days',
+  runtime: false,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: false,
+  postUpdate: '2020-08-05 20:49:30'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.0.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">2</div></a></div></div></div><hr/></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://i.loli.net/2020/05/01/IuWi8QbHvzjlOPw.jpg)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">Hexo</a></span><span class="pull-right menus"><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">First Page</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2020-08-05T12:44:29.000Z" title="Created 2020-08-05 20:44:29">2020-08-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2020-08-05T12:49:30.858Z" title="Updated 2020-08-05 20:49:30">2020-08-05</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><pre><code> CSS相关概念</code></pre>
+<ol>
+<li><p>CSS的定义</p>
+<ul>
+<li><p>HTML   超文本标记语言  </p>
+</li>
+<li><p>Cascading Style Sheets 层叠 样式表（级联样式表）</p>
+</li>
+</ul>
+</li>
+</ol>
+<pre><code> 2.CSS的作用</code></pre>
+<p>​                定义网页外观，如字体、背景、颜色, 布局 等</p>
+<p>\2. CSS特点     好~             </p>
+<p>① 精确的定位 准确的控制页面的任何元素(标记)</p>
+<p>​                ② 精细的控制 可以做到像素级别的调整 PX </p>
+<p>​                ③ 样式与内容的分离 便于维护，便于重用</p>
+<p>​    CSS使用方法</p>
+<p>​        1.    内联样式    行内样式</p>
+<p>​            在标签里面添加style属性， 属性值 写css 代码</p>
+<p>​        2. 内嵌样式  内页样式</p>
+<p>​            把 css代码 写在 style标签里面</p>
+<p>​            style标签可以写在任何位置，建议 写在head标签中</p>
+<p>​        3. 外联样式  外页样式    (推荐)</p>
+<p>​            link            <link href="css文件地址" rel="stylesheet" type='text/css'></p>
+<p>​    选择器</p>
+<p>​        1. HTML选择器 (标签选择器)    </p>
+<p>​            标签名{ }</p>
+<p>​        2. ID选择器</p>
+<p>​            #ID名{ }</p>
+<p>​            一个页面一个ID名只能给一个元素</p>
+<p>​        3. CLASS选择器  </p>
+<p>​            .class名{ }</p>
+<p>​        4. 关联选择器 </p>
+<p>​            选择器 选择器{ }</p>
+<p>​        5. 组合选择器</p>
+<p>​            选择器,选择器,选择器….{ }</p>
+<p>​        6. 伪元素选择器  a连接最常用</p>
+<p>​            选择器:hover   鼠标悬停在上面</p>
+<p>​        7.通配符</p>
+<p>​            *</p>
+<p>​        8. 选择器的优先级</p>
+<p>​            id &gt; class &gt; html标签</p>
+<p>五     CSS常见属性和值</p>
+<p>​        1. 字体属性</p>
+<p>​                font            设置字体所有的属性  font:[font-style] || [font-weight] || [font-variant] ? <font-size> <font-family></p>
+<p>​                font-family        设置字体</p>
+<p>​                font-size        设置字体大小</p>
+<p>​                font-weight     设置字体粗细    值：     normal（默认）  bold（粗）  bolder（更粗）  lighter（细）  </p>
+<p>​                font-variant     设置字体变形  normal  small-caps（不常用）</p>
+<p>​        2. 颜色属性</p>
+<p>​                color    设置字体颜色 </p>
+<p>​        3. 文本属性</p>
+<p>​                text-decoration      设置文本描述    值    overline（上划线）  underline（下划线）  line-through（删除线）  none（没效果）</p>
+<p>​                text-align          设置文本水平对齐方式    值    left     right   center</p>
+<p>​                line-height        设置行高  值 长度    行与行之间的距离    如果行高等于元素的高，文本会在元素中垂直居中</p>
+<p>​                text-transform  大小写字母转换    值 none capitalize（首字母大写）  uppercase（大写）  lowercase（小写）</p>
+<p>​        4. 背景属性</p>
+<p>​                background        background: [color] [image] [repeat] [position] [attachment]</p>
+<p>​                background-color    设置背景颜色    颜色单位</p>
+<p>​                background-image    设置背景图片  url(‘地址’)</p>
+<p>​                background-repeat    设置背景图片平铺方式    repeat(默认值)        no-repeat  repeat-x  repeat-y</p>
+<p>​                background-position    设置背景图片位置    left/right/center/number px top/center/bottom/number px  </p>
+<p>​        5. 边框属性</p>
+<p>​                border            设置边框的颜色 宽度 风格</p>
+<p>border-radius   圆角</p>
+<p>​        6. 鼠标光标属性</p>
+<p>​                cursor          设置 鼠标移动到元素上显示的效果  auto  pointer  move  crosshair  wait  help  text  not-allowed</p>
+<p>​        7. 列表属性</p>
+<p>​                list-style        设置list风格   none</p>
+<p>​        六        布局相关的属性</p>
+<p>盒模型的知识</p>
+<p>行内元素 和 块级元素的 区别</p>
+<p>​        1.    尺寸</p>
+<p>​            width            设置内容的宽</p>
+<p>​            height            设置内容的高 </p>
+<p>​        2.    外补白</p>
+<p>​            margin                                    简写 同padding    </p>
+<p>所有研究一下</p>
+<p>margin:  四个值  哪个方向</p>
+<p>margin:  三个值</p>
+<p>margin: 上下 左右 </p>
+<p>margin: 所有方向的margin </p>
+<p>​            margin-top                            距离上边的边距</p>
+<p>​            margin-right                        右边</p>
+<p>​            margin-bottom                    下边</p>
+<p>​            margin-left                            左边</p>
+<p>​        3. 内补白  </p>
+<p>​            padding                                        </p>
+<p>​                padding: 四边</p>
+<p>​                padding: 上下  左右</p>
+<p>​                padding: 上 左右 下</p>
+<p>​                padding: 上 右 下 左</p>
+<p>​            padding-top                                上边内补白</p>
+<p>​            padding-right                                右边</p>
+<p>​            padding-bottom                        下边</p>
+<p>​            padding-left                                左边</p>
+<p>\4. 浮动</p>
+<p>float </p>
+<p>\5. 定位</p>
+<p>position  absolute  relative  fixed</p>
+<p>​                </p>
+<p>​        </p>
+<p>​                </p>
+<p>​         </p>
+<p>​    </p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">John Doe</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://yoursite.com/2020/08/05/First-Page/">http://yoursite.com/2020/08/05/First-Page/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/avatar.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2020/08/05/hello-world/"><img class="next-cover" data-lazy-src="/" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Hello World</div></div></a></div></nav></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 By John Doe</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="Increase Font Size"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="Decrease Font Size"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
