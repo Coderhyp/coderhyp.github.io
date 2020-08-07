@@ -1,0 +1,193 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>数据结构 --栈与队列 | Coderhyp'Blog</title><meta name="description" content="数据结构 –栈与队列栈（first in last out）  栈的封装:  &#x2F;&#x2F;封装栈类         function Stack()&amp;#123;             &#x2F;&#x2F;栈中的属性             this.items&#x3D;[]             &#x2F;&#x2F;栈的相关操作             &#x2F;&#x2F;1.将元素压入栈             Stack.prototype.push&#x3D;"><meta name="author" content="Hypeng"><meta name="copyright" content="Hypeng"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="http://yoursite.com/2020/06/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%20--%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="数据结构 --栈与队列"><meta property="og:url" content="http://yoursite.com/2020/06/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%20--%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/"><meta property="og:site_name" content="Coderhyp'Blog"><meta property="og:description" content="数据结构 –栈与队列栈（first in last out）  栈的封装:  &#x2F;&#x2F;封装栈类         function Stack()&amp;#123;             &#x2F;&#x2F;栈中的属性             this.items&#x3D;[]             &#x2F;&#x2F;栈的相关操作             &#x2F;&#x2F;1.将元素压入栈             Stack.prototype.push&#x3D;"><meta property="og:image" content="http://yoursite.com/-https:/i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png"><meta property="article:published_time" content="2020-06-14T16:00:00.000Z"><meta property="article:modified_time" content="2020-08-07T08:09:36.917Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  bookmark: {
+    message_prev: 'Press',
+    message_next: 'to bookmark this page'
+  },
+  runtime_unit: 'days',
+  runtime: false,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-08-07 16:09:36'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.0.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">11</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E2%80%93%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97"><span class="toc-number">1.</span> <span class="toc-text">数据结构 –栈与队列</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%88%EF%BC%88first-in-last-out%EF%BC%89"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">栈（first in last out）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97"><span class="toc-number">1.0.1.</span> <span class="toc-text">栈实现队列</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BB%E9%BC%93%E4%BC%A0%E8%8A%B1"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">击鼓传花</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E6%A0%88"><span class="toc-number">1.0.1.2.</span> <span class="toc-text">队列实现栈</span></a></li></ol></li></ol></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(/-https:/i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">Coderhyp'Blog</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">数据结构 --栈与队列</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2020-06-14T16:00:00.000Z" title="Created 2020-06-15 00:00:00">2020-06-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2020-08-07T08:09:36.917Z" title="Updated 2020-08-07 16:09:36">2020-08-07</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="数据结构-–栈与队列"><a href="#数据结构-–栈与队列" class="headerlink" title="数据结构 –栈与队列"></a>数据结构 –栈与队列</h1><h4 id="栈（first-in-last-out）"><a href="#栈（first-in-last-out）" class="headerlink" title="栈（first in last out）"></a>栈（first in last out）</h4><p><img src= "/img/loading.gif" data-lazy-src="https://pic4.zhimg.com/v2-9b87a58683013d2cf04b3626926c60ab_720w.jpg?source=172ae18b"></p>
+<ul>
+<li><p>栈的封装:</p>
+</li>
+<li><pre><code class="javascript">//封装栈类
+        function Stack()&#123;
+            //栈中的属性
+            this.items=[]
+            //栈的相关操作
+            //1.将元素压入栈
+            Stack.prototype.push=function(element)&#123;
+                this.items.push(element)
+            &#125;,
+            //2.从栈中取出元素
+            Stack.prototype.pop=function()&#123;
+                return this.items.pop()
+            &#125;,
+            //3.查看一下栈顶元素
+            Stack.prototype.peek=function()&#123;
+                return this.items[this.items.length -1]
+            &#125;,
+            //4.判断是否为空
+            Stack.prototype.isEmpty=function()&#123;
+                return this.items.length==0
+            &#125;,
+
+            //5.获取元素个数
+            Stack.prototype.size=function()&#123;
+                return this.items.length
+            &#125;,
+            //6.toString方法
+            Stack.prototype.toString=function()&#123;
+                let resultString = &#39;&#39;
+                for (let i=0;i&lt;this.items.length; i++)&#123;
+                    resultString += this.items[i]+&#39;&#39;
+                &#125;
+                return resultString
+            &#125;
+
+        &#125;
+&lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;* 栈的使用： &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;* &amp;#96;&amp;#96;&amp;#96;javascript&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#x2F;&amp;#x2F;函数 ：十进制转成二进制&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          function dec2bin(decNumber) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;           &amp;#x2F;&amp;#x2F;1.定义栈对象&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;              let stack&amp;#x3D; new Stack()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          &amp;#x2F;&amp;#x2F;2.循环操作&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;              while (decNumber&amp;gt;0)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                  &amp;#x2F;&amp;#x2F;2.1获取余数，并且放到栈中&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                  stack.push(decNumber % 2)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                  &amp;#x2F;&amp;#x2F;2.2获取整除后的结果 作为下次运行的数字&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                  decNumber&amp;#x3D;Math.floor(decNumber&amp;#x2F; 2 )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;              &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          &amp;#x2F;&amp;#x2F;3.从栈中取出0 和 1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          let binaryString&amp;#x3D;&amp;#39;&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          while (!stack.isEmpty())&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                  binaryString +&amp;#x3D; stack.pop()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          return binaryString&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;</code></pre>
+</li>
+<li><h3 id="栈实现队列"><a href="#栈实现队列" class="headerlink" title="栈实现队列"></a>栈实现队列</h3></li>
+<li><pre><code class="javascript">function Squeue()&#123;
+        let stack1=[],stack2=[]
+        Squeue.prototype.Senqueue=function(node)&#123;
+            stack1.push(node)
+        &#125;,
+        Squeue.prototype.Sdequeue=function()&#123;
+            if(stack2.length&gt;0)&#123;
+               return stack2.pop()
+            &#125;else &#123;
+                while(stack1.length&gt;0)&#123;
+                stack2.push(stack1.pop())
+                &#125;
+                return stack2.pop()
+
+            &#125;
+        &#125;,
+&lt;!--hexoPostRenderEscape:&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;### 队列结构(FILO)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;#### 队列的封装：&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;![](https:&amp;#x2F;&amp;#x2F;lh3.googleusercontent.com&amp;#x2F;proxy&amp;#x2F;22AM0yZpzwydNKQmezZ6jPPsWoGj5SSmYG-FlGavh05ehxHIFIe0werYdr8h_c0yg6fWW1gOqwjhEapjlABgOS-RlebuGo1xpjejQzKCUdamRlOgiBwv77mvrQJV4O82bFJ0hnySA8l0GWVk2SXdIr6XPqzFKC4SNA8dwM5CZZ5v9ly7RKSbFR4sVCuugmrsfy4kMus)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#96;&amp;#96;&amp;#96;javascript&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; function Queue() &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#x2F;&amp;#x2F;属性&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    this.items &amp;#x3D; []&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#x2F;&amp;#x2F;方法&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#x2F;&amp;#x2F;1.将元素加入队列&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    Queue.prototype.enqeue &amp;#x3D; function (element) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      this.items.push(element)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#x2F;&amp;#x2F;2.从队列中删除前端元素&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    Queue.prototype.dequeue &amp;#x3D; function () &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      return this.items.shift()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#x2F;&amp;#x2F;3.查看前端元素&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    Queue.prototype.front &amp;#x3D; function () &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      return this.items[0]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#x2F;&amp;#x2F;4.查看队列是否为空&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    Queue.prototype.isEmpty &amp;#x3D; function () &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      return this.items.length &amp;#x3D;&amp;#x3D;&amp;#x3D; 0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#x2F;&amp;#x2F;5.查看队列中元素的个数&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    Queue.prototype.size &amp;#x3D; function () &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      return this.items.length&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#x2F;&amp;#x2F;6.toString方法&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    Queue.prototype.toString &amp;#x3D; function () &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      let resultString &amp;#x3D; &amp;#39;&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      for (let i &amp;#x3D; 0; i &amp;lt; this.items.length; i++) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        resultString +&amp;#x3D; this.items[i] + &amp;#39;&amp;#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      return resultString&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;:hexoPostRenderEscape--&gt;
+</code></pre>
+</li>
+</ul>
+<h4 id="击鼓传花"><a href="#击鼓传花" class="headerlink" title="击鼓传花"></a>击鼓传花</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//击鼓传花</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">pass</span>(<span class="params">nameList, num</span>) </span>&#123;</span><br><span class="line">  <span class="comment">//1.创建队列结构</span></span><br><span class="line">  <span class="keyword">let</span> queue = <span class="keyword">new</span> Queue()</span><br><span class="line">  <span class="comment">//2.将所有人一次加到队列中</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i&lt;nameList.length;i++)&#123;</span><br><span class="line">    queue.enqeue(nameList[i])</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//3.开始数</span></span><br><span class="line">  <span class="keyword">while</span> (queue.size()&gt;<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="comment">//不是num的时候 重新加入到队列的末尾</span></span><br><span class="line">    <span class="comment">//是num的这数字的时候 从队列删除</span></span><br><span class="line">    <span class="comment">//3.1num数字之前的人重新放入到队列的末尾</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;num<span class="number">-1</span>;i++)&#123;</span><br><span class="line">      queue.enqeue(queue.dequeue())</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//3.2num对应的这个人从队列中删除</span></span><br><span class="line">    queue.dequeue()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//4.获取剩下的那个人</span></span><br><span class="line">  alert(queue.size())</span><br><span class="line">  <span class="keyword">let</span> endName = queue.front()</span><br><span class="line">  alert(<span class="string">&#x27;剩下的人：&#x27;</span>+endName)</span><br><span class="line">  <span class="keyword">return</span> nameList.indexOf(endName)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><h4 id="队列实现栈"><a href="#队列实现栈" class="headerlink" title="队列实现栈"></a>队列实现栈</h4></li>
+<li><pre><code class="javascript"> function QStack() &#123;
+            let queue = []
+
+            QStack.prototype.Stackpush = function (node) &#123;
+                var len = queue.length;   //让len等于插入前的queue的长度 因为length会+1
+                queue.push(node);
+                for (var i = 0; i &lt; len; i++) &#123;   
+                    queue.push( queue.shift());
+                &#125;
+            &#125;,
+                QStack.prototype.Stackpop = function () &#123;
+                    return queue.shift()
+                &#125;,
+
+</code></pre>
+</li>
+</ul>
+<pre><code>              QStack.prototype.toString = function () &#123;
+                  let resultString = &#39;&#39;
+                  for (let i = 0; i &lt; queue.length; i++) &#123;
+                      resultString += queue[i] + &#39; &#39;
+                  &#125;
+                  return resultString
+              &#125;
+      &#125;</code></pre>
+<pre><code></code></pre>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Hypeng</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://yoursite.com/2020/06/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%20--%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/">http://yoursite.com/2020/06/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%20--%E6%A0%88%E4%B8%8E%E9%98%9F%E5%88%97/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/-https:/i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/06/16/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%20%20--%E9%93%BE%E8%A1%A8%E7%BB%93%E6%9E%84/"><img class="prev-cover" data-lazy-src="/-https:/i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">数据结构 --链表结构</div></div></a></div><div class="next-post pull-right"><a href="/2020/06/14/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%20%20--%20%E6%95%B0%E7%BB%84/"><img class="next-cover" data-lazy-src="/-https:/i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">数据结构 --数组</div></div></a></div></nav></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 By Hypeng</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="Increase Font Size"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="Decrease Font Size"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
