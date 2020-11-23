@@ -1,0 +1,252 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Node学习-Koa框架 | Coderhyp'Blog</title><meta name="description" content="KoaKoa初体验___node.js的下一代web框架  koa注册的中间件提供了两个参数： ctx：上下文（Context）对象； koa并没有像express一样，将req和res分开，而是将它们作为ctx的属性； ctx代表依次请求的上下文对象； ctx.request：获取请求对象； ctx.response：获取响应对象；   next：本质上是一个dispatch，类似于之前的nex"><meta name="keywords" content="-Node.js"><meta name="author" content="Hypeng"><meta name="copyright" content="Hypeng"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="http://yoursite.com/2020/11/21/Node%E5%AD%A6%E4%B9%A0-Koa%E6%A1%86%E6%9E%B6/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="Node学习-Koa框架"><meta property="og:url" content="http://yoursite.com/2020/11/21/Node%E5%AD%A6%E4%B9%A0-Koa%E6%A1%86%E6%9E%B6/"><meta property="og:site_name" content="Coderhyp'Blog"><meta property="og:description" content="KoaKoa初体验___node.js的下一代web框架  koa注册的中间件提供了两个参数： ctx：上下文（Context）对象； koa并没有像express一样，将req和res分开，而是将它们作为ctx的属性； ctx代表依次请求的上下文对象； ctx.request：获取请求对象； ctx.response：获取响应对象；   next：本质上是一个dispatch，类似于之前的nex"><meta property="og:image" content="http://yoursite.com/-https:/i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png"><meta property="article:published_time" content="2020-11-21T07:24:54.000Z"><meta property="article:modified_time" content="2020-11-23T17:29:51.206Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  bookmark: {
+    message_prev: 'Press',
+    message_next: 'to bookmark this page'
+  },
+  runtime_unit: 'days',
+  runtime: false,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-11-24 01:29:51'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.0.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">36</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">Tags</div><div class="length_num">8</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">Categories</div><div class="length_num">8</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Koa"><span class="toc-number">1.</span> <span class="toc-text">Koa</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Koa%E5%88%9D%E4%BD%93%E9%AA%8C"><span class="toc-number">1.1.</span> <span class="toc-text">Koa初体验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Koa%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">Koa中间件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Koa-%E8%B7%AF%E7%94%B1"><span class="toc-number">1.2.</span> <span class="toc-text">Koa 路由</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90"><span class="toc-number">1.3.</span> <span class="toc-text">参数解析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#params-query"><span class="toc-number">1.3.0.1.</span> <span class="toc-text">params - query</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#json-urlencoded-form-data"><span class="toc-number">1.3.0.2.</span> <span class="toc-text">json - urlencoded - form-data</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#multer-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%A4%84%E7%90%86"><span class="toc-number">1.3.0.2.1.</span> <span class="toc-text">multer 文件上传处理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#koa%E6%95%B0%E6%8D%AE%E5%93%8D%E5%BA%94"><span class="toc-number">1.3.1.</span> <span class="toc-text">koa数据响应</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">1.3.2.</span> <span class="toc-text">静态服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.3.</span> <span class="toc-text">错误处理方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#koa%E6%BA%90%E7%A0%81"><span class="toc-number">1.4.</span> <span class="toc-text">koa源码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Koa%E5%92%8Cexpress%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-number">1.5.</span> <span class="toc-text">Koa和express的对比</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%A4%E8%80%85%E4%B8%AD%E9%97%B4%E4%BB%B6%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F%E5%AF%B9%E6%AF%94"><span class="toc-number">1.5.0.1.</span> <span class="toc-text">两者中间件的执行顺序对比</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#express%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.5.0.2.</span> <span class="toc-text">express实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#koa%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.5.0.3.</span> <span class="toc-text">koa实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#koa%E6%B4%8B%E8%91%B1%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.5.1.</span> <span class="toc-text">koa洋葱模型</span></a></li></ol></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(/-https:/i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">Coderhyp'Blog</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">Node学习-Koa框架</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2020-11-21T07:24:54.000Z" title="Created 2020-11-21 15:24:54">2020-11-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2020-11-23T17:29:51.206Z" title="Updated 2020-11-24 01:29:51">2020-11-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Node-js/">Node.js</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="Koa"><a href="#Koa" class="headerlink" title="Koa"></a>Koa</h1><h2 id="Koa初体验"><a href="#Koa初体验" class="headerlink" title="Koa初体验"></a>Koa初体验</h2><p>___node.js的下一代web框架</p>
+<ul>
+<li><strong>koa注册的中间件提供了两个参数：</strong><ul>
+<li>ctx：上下文（Context）对象；</li>
+<li>koa并没有像express一样，将req和res分开，而是将它们作为ctx的属性；</li>
+<li>ctx代表依次请求的上下文对象；</li>
+<li>ctx.request：获取请求对象；</li>
+<li>ctx.response：获取响应对象；</li>
+</ul>
+</li>
+<li>next：本质上是一个dispatch，类似于之前的next； </li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">&#x27;koa&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa()</span><br><span class="line"></span><br><span class="line">app.use(<span class="function">(<span class="params">ctx,next</span>)=&gt;</span>&#123;</span><br><span class="line">    ctx.response.body=<span class="string">&quot;Hello&quot;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">8000</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;服务器启动成功&quot;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Koa中间件"><a href="#Koa中间件" class="headerlink" title="Koa中间件"></a>Koa中间件</h4><ul>
+<li><p>koa通过创建的app对象，注册中间件只能通过use方法：</p>
+<ul>
+<li><p>Koa并没有提供methods的方式来注册中间件；</p>
+</li>
+<li><p>也没有提供path中间件来匹配路径；</p>
+</li>
+</ul>
+</li>
+<li><p>但是真实开发中我们如何将路径和method分离呢？</p>
+<ul>
+<li><p>方式一：根据request自己来判断； </p>
+</li>
+<li><p>方式二：使用第三方路由中间件；</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Koa-路由"><a href="#Koa-路由" class="headerlink" title="Koa 路由"></a>Koa 路由</h2><p>使用第三方库：<code>npm install koa-router</code></p>
+<ul>
+<li>封装user.router.js文件</li>
+<li>在app中注册router.routes()为中间件</li>
+<li>注意：allowedMethods用于判断某一个method是否支持：<ul>
+<li>如果我们请求 get，那么是正常的请求，因为我们有实现get； </li>
+<li>如果我们请求 put、delete、patch，那么就自动报错：Method Not Allowed，状态码：405； </li>
+<li>如果我们请求 link、copy、lock，那么就自动报错：Not Implemented，状态码：501；</li>
+</ul>
+</li>
+</ul>
+<h2 id="参数解析"><a href="#参数解析" class="headerlink" title="参数解析"></a>参数解析</h2><h4 id="params-query"><a href="#params-query" class="headerlink" title="params - query"></a><strong>params - query</strong></h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> userRouter = <span class="keyword">new</span> Router(&#123;<span class="attr">prefix</span>:<span class="string">&#x27;/users&#x27;</span>&#125;)</span><br><span class="line">userRouter.get(<span class="string">&#x27;/:id&#x27;</span>,<span class="function">(<span class="params">ctx,next</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(ctx.request.params);</span><br><span class="line">    <span class="built_in">console</span>.log(ctx.request.query);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img src= "/img/loading.gif" data-lazy-src="/2020/11/21/Node%E5%AD%A6%E4%B9%A0-Koa%E6%A1%86%E6%9E%B6/pq.png"></p>
+<h4 id="json-urlencoded-form-data"><a href="#json-urlencoded-form-data" class="headerlink" title="json - urlencoded - form-data"></a>json - urlencoded - form-data</h4><p>解析<strong>json</strong> 和 <strong>x-www-form-urlencoded</strong>需要:</p>
+<ul>
+<li>第三方库<code>const bodyParser = require(&#39;koa-bodyparser&#39;)</code></li>
+<li>使用 koa-bodyparser的中间件<code>app.use(bodyParser())</code></li>
+</ul>
+<p>解析：<strong>form-data</strong></p>
+<ul>
+<li><code>const multer = require(&#39;koa-multer&#39;)</code></li>
+<li><code>const upload = multer()</code>             <code> app.use(upload.any())</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="function">(<span class="params">ctx,next</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(ctx.req.body); <span class="comment">//form-data 需要在req的body里 而不是request</span></span><br><span class="line">    <span class="built_in">console</span>.log(ctx.request.body); <span class="comment">//json格式 和 urlencoded</span></span><br><span class="line">    ctx.response.body=<span class="string">&quot;Hello&quot;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h5 id="multer-文件上传处理"><a href="#multer-文件上传处理" class="headerlink" title="multer 文件上传处理"></a>multer 文件上传处理</h5><p>使用<code>multer</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> uploadRouter = <span class="keyword">new</span> Router(&#123;<span class="attr">prefix</span>:<span class="string">&#x27;/upload&#x27;</span>&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> storage = multer.diskStorage(&#123;</span><br><span class="line">    destination:<span class="function">(<span class="params">req,file,cb</span>)=&gt;</span>&#123;</span><br><span class="line">        cb(<span class="literal">null</span>,<span class="string">&#x27;./uploads&#x27;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    filename:<span class="function">(<span class="params">req,file,cb</span>)=&gt;</span>&#123;</span><br><span class="line">        cb(<span class="literal">null</span>,<span class="built_in">Date</span>.now()+path.extname(file.originalname))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> upload = multer(&#123;</span><br><span class="line">    <span class="comment">// dest: &#x27;./uploads/&#x27;</span></span><br><span class="line">    storage</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">uploadRouter.post(<span class="string">&#x27;/avatar&#x27;</span>,upload.single(<span class="string">&#x27;avatar&#x27;</span>),<span class="function">(<span class="params">ctx,next</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(ctx.req.file);</span><br><span class="line">    ctx.request.body=<span class="string">&quot;上传头像成功&quot;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="koa数据响应"><a href="#koa数据响应" class="headerlink" title="koa数据响应"></a>koa数据响应</h3><p><strong>输出结果：body</strong>将响应主体设置为以下之一：</p>
+<ul>
+<li>string ：字符串数据</li>
+<li>Buffer ：Buffer数据</li>
+<li>Stream ：流数据</li>
+<li>Object|| Array：对象或者数组 </li>
+<li>null ：不输出任何内容</li>
+<li>如果response.status尚未设置，Koa会自动将状态设置为200或204(没有内容)。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctx.status = <span class="number">200</span></span><br><span class="line">   ctx.body=<span class="string">&quot;hello koa&quot;</span>  <span class="comment">//可以这样来写的原因是 本质上在源码中做了一个代理</span></span><br></pre></td></tr></table></figure>
+
+<p>源码中:</p>
+<p><img src= "/img/loading.gif" data-lazy-src="/2020/11/21/Node%E5%AD%A6%E4%B9%A0-Koa%E6%A1%86%E6%9E%B6/ym.jpg"></p>
+<h3 id="静态服务器"><a href="#静态服务器" class="headerlink" title="静态服务器"></a>静态服务器</h3><p>koa并没有内置部署相关的功能 所以使用第三方库 <code>npm install koa-static</code></p>
+<p><code>app.use(koaStatic(&#39;./build&#39;))</code></p>
+<h3 id="错误处理方式"><a href="#错误处理方式" class="headerlink" title="错误处理方式"></a>错误处理方式</h3><p>通过<strong>发出</strong>事件  <strong>接收</strong>事件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="function">(<span class="params">ctx,next</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> isLogin = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">if</span>(!isLogin)&#123;</span><br><span class="line">        ctx.app.emit(<span class="string">&quot;error&quot;</span>,<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&quot;你还没登陆呢&quot;</span>),ctx)  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.on(<span class="string">&#x27;error&#x27;</span>,<span class="function">(<span class="params">err,ctx</span>)=&gt;</span>&#123;</span><br><span class="line">    ctx.status = <span class="number">401</span></span><br><span class="line">    ctx.body = err.message </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="koa源码"><a href="#koa源码" class="headerlink" title="koa源码"></a>koa源码</h2><ul>
+<li><p>创建koa</p>
+<p><img src= "/img/loading.gif" data-lazy-src="/2020/11/21/Node%E5%AD%A6%E4%B9%A0-Koa%E6%A1%86%E6%9E%B6/ymcreate.png"></p>
+</li>
+<li><p>开启监听</p>
+<p><img src= "/img/loading.gif" data-lazy-src="/2020/11/21/Node%E5%AD%A6%E4%B9%A0-Koa%E6%A1%86%E6%9E%B6/listen.png"></p>
+</li>
+<li><p>中间件的注册</p>
+</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="/2020/11/21/Node%E5%AD%A6%E4%B9%A0-Koa%E6%A1%86%E6%9E%B6/mid.png"></p>
+<ul>
+<li>监听回调</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="/2020/11/21/Node%E5%AD%A6%E4%B9%A0-Koa%E6%A1%86%E6%9E%B6/cb.png"></p>
+<p><img src= "/img/loading.gif" data-lazy-src="/2020/11/21/Node%E5%AD%A6%E4%B9%A0-Koa%E6%A1%86%E6%9E%B6/hr.png"></p>
+<p>在之前的写多个中间件只执行最后一个的原因就是源码中handleRequest中 <code>return fnMiddleware(ctx).then(handleResponse).catch(onerror);</code>  </p>
+<ul>
+<li>compose</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="/2020/11/21/Node%E5%AD%A6%E4%B9%A0-Koa%E6%A1%86%E6%9E%B6/compose.png"></p>
+<h2 id="Koa和express的对比"><a href="#Koa和express的对比" class="headerlink" title="Koa和express的对比"></a>Koa和express的对比</h2><p>###　从架构设计上</p>
+<ul>
+<li>express 完整且强大 其中帮助我们内置了很多好用的功能</li>
+<li>koa是简洁自由的 只包含最核心的功能 不会对使用其他中间件限制 <ul>
+<li>需要通过路由或者自己判断请求方式或者其他功能</li>
+</ul>
+</li>
+<li>express和koa框架他们的核心都是<strong>中间件</strong><ul>
+<li>但是他们的中间件执行机制不同，特别针对某个中间件包含异步操作时</li>
+</ul>
+</li>
+</ul>
+<h4 id="两者中间件的执行顺序对比"><a href="#两者中间件的执行顺序对比" class="headerlink" title="两者中间件的执行顺序对比"></a>两者中间件的执行顺序对比</h4><p>案例：</p>
+<p>假如有三个中间件在一次请求中匹配到 并且按照顺序执行</p>
+<p>希望实现的方案是：</p>
+<ul>
+<li>在middleware1 中，在req.message中添加一个字符串aaa</li>
+<li>在middleware2 中，在req.message中添加一个字符串bbb</li>
+<li>在middleware3中，在req.message中添加一个字符串ccc</li>
+<li>当所有内容添加结束  在<strong>middleware1</strong>中 通过res 返回最终的结果</li>
+</ul>
+<h4 id="express实现"><a href="#express实现" class="headerlink" title="express实现"></a><strong>express实现</strong></h4><ul>
+<li>同步数据</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> middleware1 = <span class="function">(<span class="params">req,res,next</span>)=&gt;</span>&#123;</span><br><span class="line">    req.message = <span class="string">&quot;aaa&quot;</span></span><br><span class="line">    next()</span><br><span class="line">    res.end(req.message)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> middleware2 = <span class="function">(<span class="params">req,res,next</span>)=&gt;</span>&#123;</span><br><span class="line">    req.message += <span class="string">&quot;bbb&quot;</span></span><br><span class="line">    next()</span><br><span class="line">&#125;<span class="keyword">const</span> middleware3 = <span class="function">(<span class="params">req,res,next</span>)=&gt;</span>&#123;</span><br><span class="line">    req.message += <span class="string">&quot;ccc&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">app.use(middleware1,middleware2,middleware3)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>源码中首先主动调用了一次next()   遇到了next后继续匹配 然后匹配到middleware2 之后执行middleware2 的next 执行到了middleware3以后逐步回到middleware1 所以返回的结果是 aaabbbcc</p>
+<ul>
+<li>异步数据</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> axios = <span class="built_in">require</span>(<span class="string">&#x27;axios&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> middleware1 = <span class="function">(<span class="params">req,res,next</span>)=&gt;</span>&#123;</span><br><span class="line">    req.message = <span class="string">&quot;aaa&quot;</span></span><br><span class="line">    next()</span><br><span class="line">    res.end(req.message)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> middleware2 = <span class="function">(<span class="params">req,res,next</span>)=&gt;</span>&#123;</span><br><span class="line">    req.message += <span class="string">&quot;bbb&quot;</span></span><br><span class="line">    next()</span><br><span class="line">&#125;<span class="keyword">const</span> middleware3 = <span class="function">(<span class="params">req,res,next</span>)=&gt;</span>&#123;</span><br><span class="line">    axios.get(<span class="string">&quot;http://123.207.32.32:9001/lyric?id=167876&quot;</span>).then(<span class="function"><span class="params">result</span> =&gt;</span>&#123;req.message+=result.data.lrc.lyric&#125;)</span><br><span class="line">&#125;</span><br><span class="line">app.use(middleware1,middleware2,middleware3)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>  结果是aaabbb 并不会有请求的结果  如果想要有结果的话那么把res.end()写在 middleware3里面请求的后面 或者不把middleware3 当作一个中间件 而是在middleware1中把 middleware3当作一个函数调用才能实现</p>
+<h4 id="koa实现"><a href="#koa实现" class="headerlink" title="koa实现"></a><strong>koa实现</strong></h4><ul>
+<li>同步数据</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">&#x27;koa&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"><span class="keyword">const</span> middleware1 = <span class="function">(<span class="params">ctx, next</span>) =&gt;</span> &#123;</span><br><span class="line">  ctx.message = <span class="string">&quot;aaa&quot;</span>;</span><br><span class="line">  next();</span><br><span class="line">  ctx.body = ctx.message;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> middleware2 = <span class="function">(<span class="params">ctx, next</span>) =&gt;</span> &#123;</span><br><span class="line">  ctx.message += <span class="string">&quot;bbb&quot;</span>;</span><br><span class="line">  next();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> middleware3 = <span class="function">(<span class="params">ctx, next</span>) =&gt;</span> &#123;</span><br><span class="line">  ctx.message += <span class="string">&quot;ccc&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line">app.use(middleware1);</span><br><span class="line">app.use(middleware2);</span><br><span class="line">app.use(middleware3);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>异步</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">&#x27;koa&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> axios = <span class="built_in">require</span>(<span class="string">&#x27;axios&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> middleware1 = <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  ctx.message = <span class="string">&quot;aaa&quot;</span>;</span><br><span class="line">  <span class="keyword">await</span> next();</span><br><span class="line">  ctx.body = ctx.message;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> middleware2 = <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  ctx.message += <span class="string">&quot;bbb&quot;</span>;</span><br><span class="line">  <span class="keyword">await</span> next();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> middleware3 = <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line"> <span class="keyword">const</span> result =  <span class="keyword">await</span> axios.get(<span class="string">&quot;http://123.207.32.32:9001/lyric?id=167876&quot;</span>)</span><br><span class="line">  ctx.message+=result.data.lrc.lyric</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.use(middleware1);</span><br><span class="line">app.use(middleware2);</span><br><span class="line">app.use(middleware3);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">8000</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&quot;服务器启动成功~&quot;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在koa中 实现next 返回的是一个Promise  而 express是一个普通同步函数 所以可以在koa中使用 async await 来实现异步操作 </p>
+<h3 id="koa洋葱模型"><a href="#koa洋葱模型" class="headerlink" title="koa洋葱模型"></a>koa洋葱模型</h3><p><img src= "/img/loading.gif" data-lazy-src="/2020/11/21/Node%E5%AD%A6%E4%B9%A0-Koa%E6%A1%86%E6%9E%B6/ycmx.png"></p>
+<p>两层理解含义:</p>
+<ul>
+<li>中间件处理代码的过程</li>
+<li>Response返回body执行</li>
+</ul>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Hypeng</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://yoursite.com/2020/11/21/Node%E5%AD%A6%E4%B9%A0-Koa%E6%A1%86%E6%9E%B6/">http://yoursite.com/2020/11/21/Node%E5%AD%A6%E4%B9%A0-Koa%E6%A1%86%E6%9E%B6/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Node-js/">-Node.js</a></div><div class="post_share"><div class="social-share" data-image="/-https:/i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2020/11/15/Node%E5%AD%A6%E4%B9%A0-express%E6%A1%86%E6%9E%B6%E4%BD%BF%E7%94%A8/"><img class="next-cover" data-lazy-src="/-https:/i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Node学习-express框架使用</div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fas fa-thumbs-up fa-fw"></i><span> Related Articles</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2020/10/12/Node学习-模块化/" title="Node学习-模块化"><img class="relatedPosts_cover" data-lazy-src="-https://i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-12</div><div class="relatedPosts_title">Node学习-模块化</div></div></a></div><div class="relatedPosts_item"><a href="/2020/10/11/Node学习-经典邂逅/" title="Node学习-经典邂逅"><img class="relatedPosts_cover" data-lazy-src="-https://i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-11</div><div class="relatedPosts_title">Node学习-经典邂逅</div></div></a></div><div class="relatedPosts_item"><a href="/2020/10/18/Node学习-内置模块/" title="Node学习-内置模块"><img class="relatedPosts_cover" data-lazy-src="-https://i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-18</div><div class="relatedPosts_title">Node学习-内置模块</div></div></a></div><div class="relatedPosts_item"><a href="/2020/10/25/Node学习-开发脚手架工具/" title="Node学习-开发脚手架工具"><img class="relatedPosts_cover" data-lazy-src="-https://i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-25</div><div class="relatedPosts_title">Node学习-开发脚手架工具</div></div></a></div><div class="relatedPosts_item"><a href="/2020/10/24/Node学习-包管理工具/" title="Node学习-包管理工具"><img class="relatedPosts_cover" data-lazy-src="-https://i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-24</div><div class="relatedPosts_title">Node学习-包管理工具</div></div></a></div><div class="relatedPosts_item"><a href="/2020/11/02/Node踩坑记录/" title="Node踩坑记录"><img class="relatedPosts_cover" data-lazy-src="-https://i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-02</div><div class="relatedPosts_title">Node踩坑记录</div></div></a></div></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 By Hypeng</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="icp"><a><img class="icp-icon" src="/img/icp.png"/><span>辽ICP备20010781号</span></a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="Increase Font Size"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="Decrease Font Size"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
