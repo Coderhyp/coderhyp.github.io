@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>网络协议学习-MAC地址与IP地址 | Coderhyp'Blog</title><meta name="description" content="MAC地址每一个网卡都有一个6字节（48bit）的MAC地址  MAC地址全球唯一 固化在网卡ROM中 由IEEE802标准规定 前三个字节 OUI —组织唯一标识符 由IEEE的注册管理机构分配给厂商   后三个字节 —网络接口标识符 厂商自行分配    MAC地址的表现形式 windows 40-55-82-0A-8C-6D   Linux Android MAC IOS 40:55:82:0"><meta name="keywords" content="网络协议"><meta name="author" content="Hypeng"><meta name="copyright" content="Hypeng"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="http://yoursite.com/2021/03/09/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0-MAC%E5%9C%B0%E5%9D%80%E4%B8%8EIP%E5%9C%B0%E5%9D%80/"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin="crossorigin"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="article"><meta property="og:title" content="网络协议学习-MAC地址与IP地址"><meta property="og:url" content="http://yoursite.com/2021/03/09/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0-MAC%E5%9C%B0%E5%9D%80%E4%B8%8EIP%E5%9C%B0%E5%9D%80/"><meta property="og:site_name" content="Coderhyp'Blog"><meta property="og:description" content="MAC地址每一个网卡都有一个6字节（48bit）的MAC地址  MAC地址全球唯一 固化在网卡ROM中 由IEEE802标准规定 前三个字节 OUI —组织唯一标识符 由IEEE的注册管理机构分配给厂商   后三个字节 —网络接口标识符 厂商自行分配    MAC地址的表现形式 windows 40-55-82-0A-8C-6D   Linux Android MAC IOS 40:55:82:0"><meta property="og:image" content="http://yoursite.com/-https:/i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png"><meta property="article:published_time" content="2021-03-09T01:54:40.000Z"><meta property="article:modified_time" content="2021-03-10T06:58:52.641Z"><meta name="twitter:card" content="summary"><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff')
+  }
+}
+
+var getCookies = function (name) {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop().split(';').shift()
+}
+
+var autoChangeMode = 'false'
+var t = getCookies('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (Cookies.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  bookmark: {
+    message_prev: 'Press',
+    message_next: 'to bookmark this page'
+  },
+  runtime_unit: 'days',
+  runtime: false,
+  copyright: undefined,
+  ClickShowText: undefined,
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  baiduPush: false,
+  highlightCopy: true,
+  highlightLang: true,
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false    
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2021-03-10 14:58:52'
+}</script><noscript><style>
+#nav {
+  opacity: 1
+}
+.justified-gallery img {
+  opacity: 1
+}
+</style></noscript><meta name="generator" content="Hexo 5.0.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" data-lazy-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">Articles</div><div class="length_num">45</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">Tags</div><div class="length_num">12</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">Categories</div><div class="length_num">11</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MAC%E5%9C%B0%E5%9D%80"><span class="toc-number">1.</span> <span class="toc-text">MAC地址</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MAC%E5%9C%B0%E5%9D%80%E7%9A%84%E8%A1%A8%E7%8E%B0%E5%BD%A2%E5%BC%8F"><span class="toc-number">1.1.</span> <span class="toc-text">MAC地址的表现形式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MAC%E5%9C%B0%E5%9D%80%E6%93%8D%E4%BD%9C"><span class="toc-number">1.2.</span> <span class="toc-text">MAC地址操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MAC%E5%9C%B0%E5%9D%80%E7%9A%84%E8%8E%B7%E5%8F%96"><span class="toc-number">1.3.</span> <span class="toc-text">MAC地址的获取</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="toc-number">1.3.1.</span> <span class="toc-text">相关命令</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP%E5%9C%B0%E5%9D%80"><span class="toc-number">2.</span> <span class="toc-text">IP地址</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IP%E5%9C%B0%E5%9D%80%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-number">2.1.</span> <span class="toc-text">IP地址的组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IP%E5%9C%B0%E5%9D%80%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">2.2.</span> <span class="toc-text">IP地址的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#A%E7%B1%BB%E5%9C%B0%E5%9D%80"><span class="toc-number">2.2.1.</span> <span class="toc-text">A类地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#B%E7%B1%BB%E5%9C%B0%E5%9D%80"><span class="toc-number">2.2.2.</span> <span class="toc-text">B类地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C%E7%B1%BB%E5%9C%B0%E5%9D%80"><span class="toc-number">2.2.3.</span> <span class="toc-text">C类地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#D%E7%B1%BB-E%E7%B1%BB%E5%9C%B0%E5%9D%80"><span class="toc-number">2.2.4.</span> <span class="toc-text">D类 E类地址</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E8%83%BD%E5%A4%9F%E5%8C%BA%E5%88%86IP%E5%9C%B0%E5%9D%80%E5%88%86%E7%B1%BB"><span class="toc-number">2.2.4.1.</span> <span class="toc-text">通过第一部分能够区分IP地址分类</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81%E7%9A%84CIDR%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95"><span class="toc-number">2.3.</span> <span class="toc-text">子网掩码的CIDR表示方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%90%E7%BD%91%E5%88%92%E5%88%86"><span class="toc-number">3.</span> <span class="toc-text">子网划分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%90%E7%BD%91%E5%88%92%E5%88%86-1"><span class="toc-number">3.0.1.</span> <span class="toc-text">子网划分</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AD%89%E9%95%BF%E5%AD%90%E7%BD%91%E5%88%92%E5%88%86-%E7%AD%89%E5%88%86%E6%88%90%E4%B8%A4%E4%B8%AA%E5%AD%90%E7%BD%91"><span class="toc-number">3.0.1.1.</span> <span class="toc-text">等长子网划分-等分成两个子网</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%98%E9%95%BF%E5%AD%90%E7%BD%91%E5%88%92%E5%88%86"><span class="toc-number">3.0.1.2.</span> <span class="toc-text">变长子网划分</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83"><span class="toc-number">3.1.</span> <span class="toc-text">思考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B6%85%E7%BD%91"><span class="toc-number">4.</span> <span class="toc-text">超网</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E7%BD%91%E6%AE%B5%E7%9A%84%E8%A7%84%E5%BE%8B"><span class="toc-number">4.1.</span> <span class="toc-text">合并网段的规律</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E5%AD%90%E7%BD%91%E8%B6%85%E7%BD%91"><span class="toc-number">4.2.</span> <span class="toc-text">判断子网超网</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(/-https:/i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png)"><nav id="nav"><span class="pull-left" id="blog_name"><a class="blog_title" id="site-name" href="/">Coderhyp'Blog</a></span><span class="pull-right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="toggle-menu close"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">网络协议学习-MAC地址与IP地址</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-03-09T01:54:40.000Z" title="Created 2021-03-09 09:54:40">2021-03-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-03-10T06:58:52.641Z" title="Updated 2021-03-10 14:58:52">2021-03-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/">网络协议</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="MAC地址"><a href="#MAC地址" class="headerlink" title="MAC地址"></a>MAC地址</h2><p>每一个<strong>网卡</strong>都有一个6字节（48bit）的MAC地址</p>
+<ul>
+<li>MAC地址全球唯一 固化在网卡ROM中 由IEEE802标准规定</li>
+<li>前三个字节 OUI —组织唯一标识符<ul>
+<li>由IEEE的注册管理机构分配给厂商</li>
+</ul>
+</li>
+<li>后三个字节 —网络接口标识符<ul>
+<li>厂商自行分配</li>
+</ul>
+</li>
+</ul>
+<h3 id="MAC地址的表现形式"><a href="#MAC地址的表现形式" class="headerlink" title="MAC地址的表现形式"></a>MAC地址的表现形式</h3><ul>
+<li>windows<ul>
+<li>40-55-82-0A-8C-6D</li>
+</ul>
+</li>
+<li>Linux Android MAC IOS<ul>
+<li>40:55:82:0A:8C:6D</li>
+</ul>
+</li>
+<li>当48位<strong>全为1 代表广播地址</strong><ul>
+<li>MAC地址为 FF-FF-FF-FF-FF-FF</li>
+</ul>
+</li>
+</ul>
+<h3 id="MAC地址操作"><a href="#MAC地址操作" class="headerlink" title="MAC地址操作"></a>MAC地址操作</h3><ul>
+<li>查看mac地址:ipconfig/all</li>
+<li>修改mac地址<ul>
+<li>更改适配器选项 - 属性 - 配置 - 高级 - 网络地址</li>
+<li>填写的时候要去掉 - </li>
+</ul>
+</li>
+<li>有时可以通过修改mac地址蹭网<ul>
+<li>学校有可能会通过mac地址来确认是否可以上网</li>
+</ul>
+</li>
+</ul>
+<h3 id="MAC地址的获取"><a href="#MAC地址的获取" class="headerlink" title="MAC地址的获取"></a>MAC地址的获取</h3><ul>
+<li>当不知道对方主机的MAC地址时，可以通过发送ARP广播获取对方的MAC地址</li>
+<li>获取成功后 会缓存IP地址 MAC地址的映射信息 俗称ARP缓存</li>
+<li>通过ARP广播获取到的MAC地址 属于动态缓存(dynamic)<ul>
+<li>存储时间比较短 默认是两分钟 过期就自动删除</li>
+</ul>
+</li>
+</ul>
+<h4 id="相关命令"><a href="#相关命令" class="headerlink" title="相关命令"></a>相关命令</h4><ul>
+<li>arp-a [主机地址]  查询ARP缓存</li>
+<li>arp-d [主机地址]  删除ARP缓存</li>
+<li>arp-s 主机地址 MAC地址 增加一条缓存信息(静态缓存 存储时间比较久 不同系统存储时间不同)</li>
+</ul>
+<h2 id="IP地址"><a href="#IP地址" class="headerlink" title="IP地址"></a>IP地址</h2><p>IP地址(Internet Protocol Address) 互联网上每一个<strong>主机</strong>都有一个IP地址</p>
+<ul>
+<li>最初是IPV4版本 32bit (4字节)  2019年11月25日 全球ip地址用完</li>
+<li>IPV6版本 128bit(16字节)</li>
+</ul>
+<h3 id="IP地址的组成"><a href="#IP地址的组成" class="headerlink" title="IP地址的组成"></a>IP地址的组成</h3><p>两部分  网络标识(网络ID) 主机标识(主机ID)</p>
+<p><img src= "/img/loading.gif" data-lazy-src="/2021/03/09/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0-MAC%E5%9C%B0%E5%9D%80%E4%B8%8EIP%E5%9C%B0%E5%9D%80/IP%E5%9C%B0%E5%9D%80.png"></p>
+<ul>
+<li>同一<strong>网段</strong>计算机 网络ID相同<ul>
+<li>通过子网掩码可以计算出网络ID : 子网掩码&amp;IP地址</li>
+</ul>
+</li>
+<li>计算机和其他计算机通信之前 会判断目标主机和自己是否在同一网段<ul>
+<li>在同一网段 不需要路由器转发</li>
+<li>不在同一网段  需要路由器转发</li>
+</ul>
+</li>
+</ul>
+<h3 id="IP地址的分类"><a href="#IP地址的分类" class="headerlink" title="IP地址的分类"></a>IP地址的分类</h3><h4 id="A类地址"><a href="#A类地址" class="headerlink" title="A类地址"></a>A类地址</h4><p><img src= "/img/loading.gif" data-lazy-src="/2021/03/09/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0-MAC%E5%9C%B0%E5%9D%80%E4%B8%8EIP%E5%9C%B0%E5%9D%80/A%E7%B1%BB%E5%9C%B0%E5%9D%80.png"></p>
+<ul>
+<li>网络ID<ul>
+<li>0不能用 127作为保留网段 其中127.0.0.1是本地环回地址(Loopback) 代表本机地址</li>
+<li>可以分配给主机的</li>
+<li>第一部分的取值范围是1~126</li>
+</ul>
+</li>
+<li>主机ID<ul>
+<li>第2,3,4部分的取值范围是 0~255    </li>
+</ul>
+</li>
+<li>每个A类网段能够容纳的主机256 * 256 * 256 -2</li>
+</ul>
+<h4 id="B类地址"><a href="#B类地址" class="headerlink" title="B类地址"></a>B类地址</h4><p><img src= "/img/loading.gif" data-lazy-src="/2021/03/09/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0-MAC%E5%9C%B0%E5%9D%80%E4%B8%8EIP%E5%9C%B0%E5%9D%80/B.png"></p>
+<p>必须以10开头</p>
+<ul>
+<li>每个B类网段能够容纳的主机256 * 256 -2 </li>
+</ul>
+<h4 id="C类地址"><a href="#C类地址" class="headerlink" title="C类地址"></a>C类地址</h4><p><img src= "/img/loading.gif" data-lazy-src="/2021/03/09/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0-MAC%E5%9C%B0%E5%9D%80%E4%B8%8EIP%E5%9C%B0%E5%9D%80/C.png"></p>
+<p>必须以110开头</p>
+<ul>
+<li>每个C类网段能容纳的主机256-2</li>
+</ul>
+<h4 id="D类-E类地址"><a href="#D类-E类地址" class="headerlink" title="D类 E类地址"></a>D类 E类地址</h4><ul>
+<li>D类地址没有子网掩码 ，用于多播(组播) 地址<ul>
+<li>第一部分224-239</li>
+</ul>
+</li>
+<li>E类地址 第一部分240 - 255</li>
+</ul>
+<h5 id="通过第一部分能够区分IP地址分类"><a href="#通过第一部分能够区分IP地址分类" class="headerlink" title="通过第一部分能够区分IP地址分类"></a>通过第一部分能够区分IP地址分类</h5><h3 id="子网掩码的CIDR表示方法"><a href="#子网掩码的CIDR表示方法" class="headerlink" title="子网掩码的CIDR表示方法"></a>子网掩码的CIDR表示方法</h3><p>无类别域间路由</p>
+<p>表示方法:</p>
+<ul>
+<li>192.168.1.100/24 代表子网掩码有24个1 也就是255.255.255.0</li>
+<li>123.210.100.200/16 代表子网掩码有16个1 也就是255.255.0.0</li>
+</ul>
+<h2 id="子网划分"><a href="#子网划分" class="headerlink" title="子网划分"></a>子网划分</h2><ul>
+<li>如果需要让200台主机在同一个网段内,可以分配一个C类网段,比如192.168.1.0/24 <ul>
+<li>共254个可用IP地址:192.168.1.1~192.168.1.254 </li>
+<li>多出54个空闲的IP地址,这种情况并不算浪费资源</li>
+</ul>
+</li>
+<li>如果需要让500台主机在同一个网段内,那就分配一个B类网段,比如191.100.0.0/16<ul>
+<li>共65534个可用IP地址:191.100.0.1~191.100.255.254</li>
+<li>这就极大地浪费了资源</li>
+</ul>
+</li>
+<li>为了尽量避免浪费 要进行合理的子网划分</li>
+</ul>
+<h4 id="子网划分-1"><a href="#子网划分-1" class="headerlink" title="子网划分"></a>子网划分</h4><p>借用主机位作子网位 划分出多个子网</p>
+<p>可用分为:</p>
+<ul>
+<li>等长子网划分:将一个网段等分成多个子网，每个子网的可用IP数量是一样的</li>
+<li>变长子网划分:每个子网的可用IP地址数量可以是不一样的</li>
+</ul>
+<h5 id="等长子网划分-等分成两个子网"><a href="#等长子网划分-等分成两个子网" class="headerlink" title="等长子网划分-等分成两个子网"></a>等长子网划分-等分成两个子网</h5><ul>
+<li><img src= "/img/loading.gif" data-lazy-src="/2021/03/09/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0-MAC%E5%9C%B0%E5%9D%80%E4%B8%8EIP%E5%9C%B0%E5%9D%80/%E7%AD%89%E5%88%862.png"></li>
+</ul>
+<p>等长子网划分-等分成四个子网</p>
+<ul>
+<li><p>如果一个子网是原来网络四分之一  子网掩码往后移2位</p>
+</li>
+<li><p>等分成四个子网的广播地址</p>
+</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="/2021/03/09/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0-MAC%E5%9C%B0%E5%9D%80%E4%B8%8EIP%E5%9C%B0%E5%9D%80/%E5%B9%BF%E6%92%AD%E5%9C%B0%E5%9D%80.png"></p>
+<p>等长子网划分-等分成八个子网</p>
+<p>如果一个子网是原来网络八分之一  子网掩码往后移3位</p>
+<h5 id="变长子网划分"><a href="#变长子网划分" class="headerlink" title="变长子网划分"></a>变长子网划分</h5><ul>
+<li>如果一个子网地址块的长度是原网段的(1/2)^n 那么子网的子网掩码就是在原网段子网掩码的基础上增加n个1</li>
+<li>不等长的子网 他们的子网掩码也不同</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="/2021/03/09/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0-MAC%E5%9C%B0%E5%9D%80%E4%B8%8EIP%E5%9C%B0%E5%9D%80/%E5%8F%98%E9%95%BF.png"></p>
+<p>对192.168.0.0/24变长子网划分</p>
+<p>C网段:子网掩码是255.255.255.128/25<br>B网段:子网掩码是255.255.255.192/26<br>A网段:子网掩码是255.255.255.224/27<br>D网段:子网掩码是255.255.255.252/30<br>E网段:子网掩码是255.255.255.252/30</p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p><img src= "/img/loading.gif" data-lazy-src="/2021/03/09/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0-MAC%E5%9C%B0%E5%9D%80%E4%B8%8EIP%E5%9C%B0%E5%9D%80/%E6%80%9D%E8%80%83.png"></p>
+<p>这两台设备不能正常通信 因为两台计算机之间会用自己的子网掩码和对方的IP地址计算网路号查看是否在同一网段</p>
+<h2 id="超网"><a href="#超网" class="headerlink" title="超网"></a>超网</h2><p>和子网反过来 它是将多个连续的网段合并成一个更大的网段</p>
+<p>需求:原本有200台计算机使用192.168.0.0/24网段,现在希望增加200台设备到同一个网段 </p>
+<p>200台在192.168.0.0/24网段,200台在192.168.1.0/24网段</p>
+<p>合并192.168.0.0/24、192.168.1.0/24为ー个网段:192.168.0.0/23(子网掩码<strong>往左移动1位</strong>)</p>
+<h3 id="合并网段的规律"><a href="#合并网段的规律" class="headerlink" title="合并网段的规律"></a>合并网段的规律</h3><p>假设n是2的k次幂(k大于等于1)</p>
+<p><strong>子网掩码左移k位能够合并n个网段</strong></p>
+<p>如果第一个网络的网络号能被n整除 那么由它开始连续的n个网段，能通过左移k位子网掩码进行合并</p>
+<ul>
+<li>比如<ul>
+<li>第一个网段的网络号以二进制 0 结尾(能被二整除)，那么由它开始连续两个网段 能通过左移1位子网掩码进行合并</li>
+<li>第一个网段的网络号以二进制 00 结尾(能被四整除)，那么由它开始连续四个网段 能通过左移2位子网掩码进行合并</li>
+<li>第一个网段的网络号以二进制 000 结尾(能被八整除)，那么由它开始连续八个网段 能通过左移3位子网掩码进行合并</li>
+</ul>
+</li>
+</ul>
+<img src= "/img/loading.gif" data-lazy-src="/2021/03/09/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0-MAC%E5%9C%B0%E5%9D%80%E4%B8%8EIP%E5%9C%B0%E5%9D%80/合并网段规律.png" style="zoom:50%;">
+
+<p>（只要二进制最右边一位是0 那么就一定是偶数）</p>
+<h3 id="判断子网超网"><a href="#判断子网超网" class="headerlink" title="判断子网超网"></a>判断子网超网</h3><ul>
+<li>首先看网段类型<ul>
+<li>默认情况 A类子网掩码位数是8 B类子网掩码位数是16 C类子网掩码位数是24</li>
+</ul>
+</li>
+<li>如果该网段子网掩码位数比默认要多 那么就是子网</li>
+<li>如果该网段子网掩码位数比默认要少 那么就是超网</li>
+</ul>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Hypeng</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://yoursite.com/2021/03/09/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0-MAC%E5%9C%B0%E5%9D%80%E4%B8%8EIP%E5%9C%B0%E5%9D%80/">http://yoursite.com/2021/03/09/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0-MAC%E5%9C%B0%E5%9D%80%E4%B8%8EIP%E5%9C%B0%E5%9D%80/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/">网络协议</a></div><div class="post_share"><div class="social-share" data-image="/-https:/i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/03/10/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0-%E8%B7%AF%E7%94%B1-%E5%B1%80%E5%9F%9F%E7%BD%91/"><img class="prev-cover" data-lazy-src="/-https:/i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">网络协议学习-路由_局域网</div></div></a></div><div class="next-post pull-right"><a href="/2021/03/02/%E5%AE%9E%E4%B9%A0%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"><img class="next-cover" data-lazy-src="/-https:/i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info"></div></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fas fa-thumbs-up fa-fw"></i><span> Related Articles</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2021/02/18/网络协议学习-邂逅/" title="网络协议学习-邂逅"><img class="relatedPosts_cover" data-lazy-src="-https://i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-18</div><div class="relatedPosts_title">网络协议学习-邂逅</div></div></a></div><div class="relatedPosts_item"><a href="/2021/03/10/网络协议学习-路由-局域网/" title="网络协议学习-路由_局域网"><img class="relatedPosts_cover" data-lazy-src="-https://i.loli.net/2020/08/06/3vZOJDP5ExM9bN8.png"><div class="relatedPosts_main is-center"><div class="relatedPosts_date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-10</div><div class="relatedPosts_title">网络协议学习-路由_局域网</div></div></a></div></div></div></article></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Hypeng</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span></div><div class="icp"><a><img class="icp-icon" src="/img/icp.png"/><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">辽ICP备20010781号</a></a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="font_plus" type="button" title="Increase Font Size"><i class="fas fa-plus"></i></button><button id="font_minus" type="button" title="Decrease Font Size"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module" defer></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js" async></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
